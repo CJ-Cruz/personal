@@ -1,0 +1,170 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta property="og:description" content="Enigma.js is a javascript encrypter/decrypter based on caesar cipher that uses two keys and random-based encryption." />
+	<title>Enigma</title>
+<style type="text/css">
+	#input,#output{
+		width: 30%;
+		height: 100px;
+		border: 2px solid #cccccc;
+		padding: 5px;
+		font-family: Tahoma, sans-serif;
+	}
+
+	.demo{
+
+		width: 800px;
+		border: solid;
+		border-color: gray;
+		border-width: 1px;
+
+	}
+	.timer_demo{
+
+		width: 90px;
+		border: solid;
+		border-color: gray;
+		border-width: 1px;
+		margin: 5px;
+		text-align: center;
+
+	}
+
+	.codebox{
+
+		width: 760px;
+		overflow: hidden;
+		resize: none;
+		border: solid;
+		border-color: gray;
+		border-width: 1px;
+		margin: 5px;
+
+	}
+
+	textarea,
+	pre {
+	    -moz-tab-size : 2;
+	      -o-tab-size : 2;
+	         tab-size : 2;
+	}
+
+
+</style>
+<script type="text/javascript" src="enigma.min.js"></script>
+<script type="text/javascript">
+
+	document.addEventListener("DOMContentLoaded", init);
+
+	function init(){
+
+		var ta = document.querySelectorAll('textarea.codebox');
+		
+		ta[0].style.height = 'auto';
+    	ta[0].style.height = ta[0].scrollHeight-19+'px';
+
+	}
+
+
+</script>
+</head>
+<body>
+
+	<h1 style="margin:5px">Enigma.js</h1>
+	<small style="margin-left:10px">by CJ Cruz</small>
+	<hr>
+	<p>Enigma.js is a javascript encrypter/decrypter based on caesar cipher that uses two keys and random-based encryption on a preset character sequence. (Seemingly like three keys)</p>
+	The first key is javascript-based. This is the seed of the randomizer. The second key is the first character embedded in the message.<br>
+	Each key can have up to 94 different encryptions and changes as time passes. As long as the key is correct, the enigma will easily decrypt an encrypted message.<br>
+	Since it is based on the caesar cipher, encryption/decryption levels apply. (Double encryption needs double decryption on correct keys).<br><br>
+	Powered by David Bau's <a href="https://github.com/davidbau/seedrandom">seedrandom.js</a>
+	<hr>
+	
+	<a href="#basicUsage">Basic Usage</a>
+
+	<hr>
+
+	<a name="basicUsage"></a>
+	<h2 style="margin-bottom:0px">Basic Usage</h2>
+	<div style="width:124px"><hr></div>
+	<div class="demo">
+		<div style="margin: 10px">
+			<h4 style="margin: 5px">Basic Encryption/Decryption With Key</h4>
+			<strong>Encrypt</strong><br>
+			Key: <input type="text" id="keyfield" oninput="change()" value="key"><br>
+			<button id="stopper" onclick="control()">Stop</button><br>
+			<textarea class="encrypt" id="input"></textarea>
+			<textarea class="encrypt" id="output"></textarea>
+			<br>
+			<strong>Decrypt</strong><br>
+			<textarea class="decrypt" id="input" oninput="decrypter()"></textarea>
+			<textarea class="decrypt" id="output"></textarea>
+			<br>
+			<h5 style="margin: 0px; margin-left: 10px">code:</h5>
+			<textarea disabled="disabled" class="codebox">
+				
+&ltstrong&gtEncrypt&lt/strong&gt&ltbr&gt
+Key: &ltinput type="text" id="keyfield" oninput="shift()" value="key"&gt&ltbr&gt
+&ltbutton id="stopper" onclick="control()"&gtStop&lt/button&gt&ltbr&gt
+&lttextarea class="encrypt" id="input"&gt&lt/textarea&gt
+&lttextarea class="encrypt" id="output"&gt&lt/textarea&gt
+&ltbr&gt
+&ltstrong&gtDecrypt&lt/strong&gt&ltbr&gt
+&lttextarea class="decrypt" id="input" oninput="decrypter()"&gt&lt/textarea&gt
+&lttextarea class="decrypt" id="output"&gt&lt/textarea&gt
+
+<script type="text/javascript">
+
+	enigma_init("key");
+	var enabled = true;
+
+	//finds the input textarea and encrypt its message in the output textarea
+	function encrypter(){
+		if(enabled){
+			var input = document.querySelectorAll("textarea.encrypt#input")[0].value;
+			if(input!='')
+				document.querySelectorAll("textarea.encrypt#output")[0].value = encrypt(input);
+		}
+	}
+
+	//finds the input textarea and decrypt its message in the output textarea
+	function decrypter(){
+		var input = document.querySelectorAll("textarea.decrypt#input")[0].value;
+		if(input!='')
+			document.querySelectorAll("textarea.decrypt#output")[0].value = decrypt(input);
+	}
+
+	//controls the encrypter by stopping the encryption loop
+	function control(){
+		if(enabled){
+			document.querySelectorAll("button#stopper")[0].innerHTML = "Scramble";
+		}
+		else{
+			document.querySelectorAll("button#stopper")[0].innerHTML = "Stop";
+		}
+		enabled = !enabled;
+	}
+
+	//changes the key to what is written in the input keyfield
+	function change(){
+
+		var newkey = document.querySelectorAll("input#keyfield")[0].value;
+		enigma_init(newkey);
+
+	}
+
+	setInterval(function(){ encrypter(); }, 100);
+
+</script>
+
+			</textarea>
+			To use on your own html, download <a href="enigma.min.js" download="enigma.min.js">enigma.min.js</a>.<br>
+			Initialize/change key with enigma_init("your_key")<br>
+			Use encrypt(message) to encrypt.<br>
+			Use decrypt(message) to decrypt.<br>
+		</div>
+	</div>
+</body>
+</html>

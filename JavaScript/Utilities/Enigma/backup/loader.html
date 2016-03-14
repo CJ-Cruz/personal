@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Enigma</title>
+<style type="text/css">
+	textarea{
+		width: 600px;
+		height: 120px;
+		border: 3px solid #cccccc;
+		padding: 5px;
+		font-family: Tahoma, sans-serif;
+	}
+</style>
+<script type="text/javascript" src="enigma.js"></script>
+<script type="text/javascript">
+
+	enigma_init("Khazujira");
+	var enabled = true;
+
+	function encrypter(){
+		if(enabled){
+			var input = document.querySelectorAll("textarea.encrypt#input")[0].value;
+			if(input!='')
+				document.querySelectorAll("textarea.encrypt#output")[0].value = encrypt(input);
+		}
+	}
+
+	function decrypter(){
+		var input = document.querySelectorAll("textarea.decrypt#input")[0].value;
+		if(input!='')
+			document.querySelectorAll("textarea.decrypt#output")[0].value = decrypt(input);
+	}
+
+	function control() 
+	{
+		if(enabled){
+			document.querySelectorAll("button#stopper")[0].innerHTML = "Scramble";
+		}
+		else{
+			document.querySelectorAll("button#stopper")[0].innerHTML = "Stop";
+		}
+		enabled = !enabled;
+	}
+
+	setInterval(function(){ encrypter(); }, 100);
+
+</script>
+</head>
+<body>
+
+	<h1>Enigma.js</h1>
+
+	Created by CJ Cruz
+	<br>
+	Powered by David Bau's <a href="https://github.com/davidbau/seedrandom">seedrandom.js</a>
+	
+	<br>
+	<h2>Encrypt</h2>
+	<button id="stopper" onclick="control()">Stop</button><br>
+	<textarea class="encrypt" id="input"></textarea>
+	<textarea class="encrypt" id="output"></textarea>
+	<br>
+	<h2>Decrypt</h2>
+	<textarea class="decrypt" id="input" oninput="decrypter()"></textarea>
+	<textarea class="decrypt" id="output"></textarea>
+
+</body>
+</html>

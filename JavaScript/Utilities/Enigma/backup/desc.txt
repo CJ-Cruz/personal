@@ -1,0 +1,4 @@
+Enigma.js is a javascript encrypter/decrypter based on caesar cipher that uses two keys and random-based encryption. Each key can have up to 94 different encryptions and changes as time passes. As long as the key is correct, the enigma will easily decrypt an encrypted message.
+
+Each key can have up to 94 different encryptions and changes as time passes. As long as the key is correct, the enigma will easily decrypt an encrypted message.<br>
+	
